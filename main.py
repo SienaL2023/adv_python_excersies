@@ -120,20 +120,50 @@ def maxProfit(prices):
     #       get diff between number and temp
     #       update profit variable
     # return profit
+    # 0(n*m)
+    # profit = 0
+    # for x in range(len(prices)): #0(n)
+    #     temp = prices[x]
+    #
+    #     for y in range(x+1, len(prices)): # 0(m)
+    #         diff = prices[y] - temp
+    #         if diff > profit:
+    #             profit = diff
+    # return profit
+
+    # Goal: 0(n)
+    # loop through each number in list,
+    # at each iteration, update maximum profit and find out minimum price
+    # maximum profit = max(profit, number-minimum)
     profit = 0
-    for x in range(len(prices)):
-        temp = prices[x]
-
-        for y in range(x+1, len(prices)):
-            diff = prices[y] - temp
-            if diff > profit:
-                profit = diff
+    minimum = 10000000000000 # very big so no number can beat it
+    for x in range(len(prices)): # 0(n)
+        if prices[x] < minimum: # if ur current min is bigger then this price, change
+            minimum = prices[x]
+        profit = max(profit, prices[x] - minimum) # max(profit, current number - min), sets new profit incase this new number is better
     return profit
-
-print(min(5,7))
-print(max(5,7))
-profit = maxProfit([7,1,5,3,6,4])
-assert profit == 5
+# print(min(5,7))
+# print(max(5,7))
+profit = maxProfit([3,4,1,8,5,3])
+assert profit == 7
 
 profit = maxProfit([7,6,4,3,1])
 assert profit == 0
+
+# exercise #4
+# merge and sort two lists
+# given two lists, merge them into one list and sort it
+
+def mergeSortList(list1, list2):
+    final_list = list1+list2 # merges 2 lists
+    for x in range(len(final_list)): # going through every list
+        for y in range(len(final_list)-x-1): # minus 1 bc u dont wanna be out of bounds in the list and minus x bc it may be next iteration
+            if final_list[y] > final_list[y+1]: # if #y is greater then nxt num
+                temp = final_list[y+1] # put number in extra hand
+                final_list[y+1] = final_list[y] # overwrite that number bc it is already stored in extra hand
+                final_list[y] = temp # stuff in extra hand goes to empty hand
+
+    return final_list
+# mergeSortList([1,3,5,7], [2,4,6,8])
+answer = mergeSortList([1,3,5,7], [2,4,6,8])
+assert answer == [1,2,3,4,5,6,7,8]
