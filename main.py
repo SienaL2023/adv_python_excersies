@@ -154,16 +154,56 @@ assert profit == 0
 # merge and sort two lists
 # given two lists, merge them into one list and sort it
 
-def mergeSortList(list1, list2):
-    final_list = list1+list2 # merges 2 lists
-    for x in range(len(final_list)): # going through every list
-        for y in range(len(final_list)-x-1): # minus 1 bc u dont wanna be out of bounds in the list and minus x bc it may be next iteration
-            if final_list[y] > final_list[y+1]: # if #y is greater then nxt num
-                temp = final_list[y+1] # put number in extra hand
-                final_list[y+1] = final_list[y] # overwrite that number bc it is already stored in extra hand
-                final_list[y] = temp # stuff in extra hand goes to empty hand
 
+def bubbleSort(final_list):# O(n^2)
+    for x in range(len(final_list)):  # going through every list
+        for y in range(len(final_list) - x - 1):  # minus 1 bc u dont wanna be out of bounds in the list and minus x bc it may be next iteration
+            if final_list[y] > final_list[y + 1]:  # if #y is greater then nxt num
+                # temp = final_list[y+1] # put number in extra hand
+                # final_list[y+1] = final_list[y] # overwrite that number bc it is already stored in extra hand
+                # final_list[y] = temp # stuff in extra hand goes to empty hand
+                final_list[y], final_list[y + 1] = final_list[y + 1], final_list[y]
     return final_list
+
+def selectionSort(list): # O(n^2)
+    # repeatedly selects the smallest element from list and swaps it with first element (or index)
+    # loop through input list
+    for x in range(len(list)):
+        smallest = x # set smallest as the index num , so basically x
+        # find smallest element to swap
+        for y in range(x+1, len(list)): # range(next one, end of list)
+            if(list[smallest] > list[y]): # compare the current num to the list[y]
+                smallest = y # update variable
+        list[x], list[smallest] = list[smallest], list[x] # a,b = b,a
+    return list
+
+def insertionSort(list):
+    for x in range(1, len(list)):
+        key = list[x] # stays constant in the while loop
+        index = x-1 # will change in while loop
+        while key < list[index]:
+            # loop to move element to proper place
+            list[index+1] = list[index] # the bigger and smaller num
+            index -= 1 # moves to the next num to the left
+        list[index+1] = key # puts the key wherever it got stuck
+    return list
+# index = 2
+# key =5
+# 5 < list[2] --> yes
+# list[3] = 13
+# index -= 1 --> index =1
+# 5 <list[index] --> yes
+# list[2] = 12
+# index -= 1 --> index = 0
+
+# [11,12,13,5,6]
+
+def mergeSortList(list1, list2):
+    final_list = list1 + list2 #merge two lists
+    return insertionSort(final_list)
+
+
+
 # mergeSortList([1,3,5,7], [2,4,6,8])
 answer = mergeSortList([1,3,5,7], [2,4,6,8])
 assert answer == [1,2,3,4,5,6,7,8]
