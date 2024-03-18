@@ -177,7 +177,7 @@ def selectionSort(list): # O(n^2)
         list[x], list[smallest] = list[smallest], list[x] # a,b = b,a
     return list
 
-def insertionSort(list):
+def insertionSort(list): # o(n^2)
     for x in range(1, len(list)):
         key = list[x] # stays constant in the while loop
         index = x-1 # will change in while loop
@@ -198,12 +198,50 @@ def insertionSort(list):
 
 # [11,12,13,5,6]
 
+def mergeSort(list):
+    if len(list) > 1: # if the list is already at one u cant keep dividing
+        mid = len(list)//2 # finds midpoint to spilt list
+        left = list[0:mid] # creates left side of list
+        right = list[mid:] # creates right side of list
+        mergeSort(left) # makes that part of the list go back into the function to split again
+        mergeSort(right) # makes part of list go back and split
+        # split until its one, then go onto next part!
+        #### algorithm of mergesort
+        x = 0
+        y = 0
+        z = 0
+        while x < len(left) and y < len(right):
+            if left[x] <= right[y]: # if x is less then y, x would be first on the list
+                list[z] = left[x] # adds to final list
+                x += 1 # now out of while loop
+            else:
+                list[z] = right[y] # same but for y or right side
+                y += 1
+            z += 1
+        while x < len(left): # same but for left if it didnt qualify last time
+            list[z] = left[x]
+            x += 1
+            z += 1
+        while y < len(right): # same but right if u didnt qualify last time
+            list[z] = right[y]
+            y += 1
+            z += 1
+    return list
+
+
 def mergeSortList(list1, list2):
     final_list = list1 + list2 #merge two lists
-    return insertionSort(final_list)
+    return mergeSort(final_list)
 
 
 
 # mergeSortList([1,3,5,7], [2,4,6,8])
 answer = mergeSortList([1,3,5,7], [2,4,6,8])
 assert answer == [1,2,3,4,5,6,7,8]
+
+def sort(list):
+    for x in range(len(list)):
+        for y in range(len(list) - x -1):
+            if list[y] > list[y+1]:
+                list[y], list[y+1] = list[y+1], list[y]
+    return list
