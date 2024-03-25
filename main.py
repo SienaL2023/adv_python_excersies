@@ -198,7 +198,7 @@ def insertionSort(list): # o(n^2)
 
 # [11,12,13,5,6]
 
-def mergeSort(list):
+def mergeSort(list): # O(n*ln(n))
     if len(list) > 1: # if the list is already at one u cant keep dividing
         mid = len(list)//2 # finds midpoint to spilt list
         left = list[0:mid] # creates left side of list
